@@ -7,6 +7,8 @@ public class Main {
 		System.out.print("DWADWADAGRGRDGAOMFAOJF");
 		
 		int favoriteNum = 0;
+		
+		System.out.print("Hi");
 	}
 
 }
