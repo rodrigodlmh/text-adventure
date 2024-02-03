@@ -10,6 +10,19 @@ public class Room {
     public Item item2;
     public Item item3;
     public Item item4;
+
+	/**
+	 * <p>
+	 * The constructor takes a name and four items.
+	 * The room is then filled with the items based on each item's spawn rate.
+	 * If no item spawns, that space is left blank.
+	 * </p>
+	 * @param Name
+	 * @param item1
+	 * @param item2
+	 * @param item2
+	 * @param item3
+	 */
     public static void Room(String Name, Item item1, Item item2, Item item2, Item item3, Item4) {
 
         this.roomName = Name;
@@ -42,6 +55,14 @@ public class Room {
 
     }
 
+	/**
+	 * <p>
+	 * This method accepts a set of x y cords and returns an item for the player to interact with.
+	 * </p>
+	 * @param xcord
+	 * @param ycord
+	 * @return Item
+	 */
     public Item MovePlayer(int xcord, int ycord){
         switch (grid[xcord][ycord]) {
             case 1:
