@@ -60,4 +60,15 @@ public class Room {
                 break;
         }
     }
+
+	@Override
+	public String toString () {
+        System.out.println("-------");
+		System.out.println("|" + grid[0][0] + "|" + grid[1][0] + "|" + grid[2][0] + "|");
+		System.out.println("-------");
+		System.out.println("|" + grid[0][1] + "|" + grid[1][1] + "|" + grid[2][1] + "|");
+		System.out.println("-------");
+		System.out.println("|" + grid[0][2] + "|" + grid[1][2] + "|" + grid[2][2] + "|");
+		System.out.println("-------");
+	}
 }
