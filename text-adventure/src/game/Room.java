@@ -1,13 +1,15 @@
 package game;
 
-import java.utils.random;
+import java.beans.JavaBean;
+import java.util.Random;
 import java.io.Serializable;
 
+@JavaBean
 public class Room implements Serializable {
 
-	private string roomName
+	private String roomName;
 
-	private int[3][3]grid;
+	private int[][]grid = new int[3][3];
 
 	private Item item1;
 	private Item item2;
@@ -27,7 +29,7 @@ public class Room implements Serializable {
 	 * @param item2
 	 * @param item3
 	 */
-	public static void Room(String Name, Item item1, Item item2, Item item2, Item item3, Item4) {
+	public Room(String Name, Item item1, Item item2, Item item3, Item item4) {
 
 		this.roomName = Name;
 		this.item1 = item1;
@@ -37,7 +39,7 @@ public class Room implements Serializable {
 
 		for (int[] xcord : grid) {
 			for (int ycord : xcord) {
-				switch (new Random().nextiInt(4)) {
+				switch (new Random().nextInt(4)) {
 					case 1:
 						grid[xcord][ycord] = item1.Spawn() ? 1 : 0;
 						break;
@@ -89,12 +91,6 @@ public class Room implements Serializable {
 
 	@Override
 	public String toString() {
-		System.out.println("-------");
-		System.out.println("|" + grid[0][0] + "|" + grid[1][0] + "|" + grid[2][0] + "|");
-		System.out.println("-------");
-		System.out.println("|" + grid[0][1] + "|" + grid[1][1] + "|" + grid[2][1] + "|");
-		System.out.println("-------");
-		System.out.println("|" + grid[0][2] + "|" + grid[1][2] + "|" + grid[2][2] + "|");
-		System.out.println("-------");
+		return "-------\n" + "|" + grid[0][0] + "|" + grid[1][0] + "|" + grid[2][0] + "|" + "\n-------\n"+"|" + grid[0][1] + "|" + grid[1][1] + "|" + grid[2][1] + "|"+"\n-------\n"+"|" + grid[0][2] + "|" + grid[1][2] + "|" + grid[2][2] + "|"+"\n-------";
 	}
 }
