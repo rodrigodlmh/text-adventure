@@ -35,6 +35,185 @@ public class Main
 		{
 			System.out.println("You interacted with the " + object);
 		}
+		/**
+		 * Move in specified direction
+		 * @param direction
+		 */
+		private static void Move(String direction)
+		{
+			for(int i = 0; i < room[0].length; i++)
+			{
+				for(int j = 0; j < room[1].length; j++)
+				{
+					if(room[i][j] == 1)
+					{
+						if(direction.equals("north"))
+						{
+							if(i == 0)
+							{
+								System.out.println("Walking into a wall isn't advisable");
+							}
+							else
+							{
+								room[i][j] = 0;
+								room[i - 1][j] = 1;
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+						else if(direction.equals("south"))
+						{
+							if(i == 2)
+							{
+								System.out.println("Walking into a wall isn't advisable");
+							}
+							else
+							{
+								room[i][j] = 0;
+								room[i + 1][j] = 1;
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+						else if(direction.equals("east"))
+						{
+							if(j == 2)
+							{
+								System.out.println("Walking into a wall isn't advisable");
+							}
+							else
+							{
+								room[i][j] = 0;
+								room[i][j + 1] = 1;
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+						else if(direction.equals("west"))
+						{
+							if(j == 0)
+							{
+								System.out.println("Walking into a wall isn't advisable");
+							}
+							else
+							{
+								room[i][j] = 0;
+								room[i][j - 1] = 1;
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+					}
+				}
+			}
+		}
+		/**
+		 * Look in specified direction
+		 * @param direction
+		 */
+		private static void Look(String direction)
+		{
+			for(int i = 0; i < room[0].length; i++)
+			{
+				for(int j = 0; j < room[1].length; j++)
+				{
+					if(room[i][j] == 1)
+					{
+						if(direction.equals("north"))
+						{
+							if(i == 0)
+							{
+								System.out.println("You can stare at walls another time");
+							}
+							else
+							{
+								if(items[i - 1][j] == 0)
+								{
+									System.out.println("You see nothing");
+								}
+								else
+								{
+									System.out.println("You see a " + items[i - 1][j]);
+								}
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+						else if(direction.equals("south"))
+						{
+							if(i == 2)
+							{
+								System.out.println("You can stare at walls another time");
+							}
+							else
+							{
+								if(items[i + 1][j] == 0)
+								{
+									System.out.println("You see nothing");
+								}
+								else
+								{
+									System.out.println("You see a " + items[i + 1][j]);
+								}
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+						else if(direction.equals("east"))
+						{
+							if(j == 2)
+							{
+								System.out.println("You can stare at walls another time");
+							}
+							else
+							{
+								if(items[i][j + 1] == 0)
+								{
+									System.out.println("You see nothing");
+								}
+								else
+								{
+									System.out.println("You see a " + items[i][j + 1]);
+								}
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+						else if(direction.equals("west"))
+						{
+							if(j == 0)
+							{
+								System.out.println("You can stare at walls another time");
+							}
+							else
+							{
+								if(items[i][j - 1] == 0)
+								{
+									System.out.println("You see nothing");
+								}
+								else
+								{
+									System.out.println("You see a " + items[i][j - 1]);
+								}
+								
+								i = room[0].length;
+								j = room[1].length;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		static int[][] room = new int[3][3];
+		static int[][] items = new int[3][3];
 	}
 	
 	// 1.6 -- Unchangeable logging variable
@@ -50,6 +229,18 @@ public class Main
 	{
 		try 
 		{
+			Actions.room[1][1] = 1;
+			
+			Actions.items[0][0] = 0;
+			Actions.items[0][1] = 2;
+			Actions.items[0][2] = 3;
+			Actions.items[1][0] = 4;
+			Actions.items[1][1] = 5;
+			Actions.items[1][2] = 0;
+			Actions.items[2][0] = 0;
+			Actions.items[2][1] = 8;
+			Actions.items[2][2] = 9;
+			
 			// Run game until it's beaten
 			while(end == false)
 			{
@@ -95,18 +286,32 @@ public class Main
 		// Ensure the input only contains a verb and a noun
 		if(strings.length == 2)
 		{
+			// Assign verb and noun to variables
+			verb = strings[0].toLowerCase();
+			noun = strings[1].toLowerCase();
+			
 			// Checks if verb and noun are valid for every command
-			if(strings[0].toLowerCase().equals("take"))
+			if(verb.equals("take"))
 			{
-				Actions.Take(strings[1]);
+				Actions.Take(noun);
 			}
-			else if(strings[0].toLowerCase().equals("use"))
+			else if(verb.equals("use"))
 			{
-				Actions.Use(strings[1]);
+				Actions.Use(noun);
 			}
-			else if(strings[0].toLowerCase().equals("interact"))
+			else if(verb.equals("interact"))
 			{
-				Actions.Interact(strings[1]);
+				Actions.Interact(noun);
+			}
+			else if(verb.equals("move") && (noun.equals("north") || noun.equals("south") || 
+					noun.equals("east") || noun.equals("west")))
+			{
+				Actions.Move(noun);
+			}
+			else if(verb.equals("look") && (noun.equals("north") || noun.equals("south") || 
+					noun.equals("east") || noun.equals("west")))
+			{
+				Actions.Look(noun);
 			}
 			else
 			{
