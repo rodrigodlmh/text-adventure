@@ -37,7 +37,7 @@ public class Room implements Serializable {
 		this.item3 = item3;
 		this.item4 = item4;
 
-		for (int[] xcord : grid) {
+		/*for (int[] xcord : grid) {
 			for (int ycord : xcord) {
 				switch (new Random().nextInt(4)) {
 					case 1:
@@ -57,7 +57,7 @@ public class Room implements Serializable {
 						break;
 				}
 			}
-		}
+		}*/
 
 	}
 
@@ -70,7 +70,7 @@ public class Room implements Serializable {
 	 * @param ycord
 	 * @return Item
 	 */
-	public Item MovePlayer(int xcord, int ycord) {
+	/*public Item MovePlayer(int xcord, int ycord) {
 		switch (grid[xcord][ycord]) {
 			case 1:
 				return item1;
@@ -87,7 +87,7 @@ public class Room implements Serializable {
 			default:
 				break;
 		}
-	}
+	}*/
 
 	@Override
 	public String toString() {
