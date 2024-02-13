@@ -12,7 +12,7 @@ public class Player {
 	public void GetAllItemsInRoom(Item[] items) {
 		for(Item item : items) {
 			if(item.Interact()) {
-				inventory.AddItemToInventory(item);	
+				//inventory.AddItemToInventory(item);	
 			}
 		}
 	}
@@ -21,9 +21,9 @@ public class Player {
 	
 	}
 	
-	public void GetAproachedItem(Item item) {
+	public void GetApproachedItem(Item item) {
 		if(item.Interact()) {
-			inventory.AddItemToInventory(item);
+			//inventory.AddItemToInventory(item);
 		}
 	}
 	
