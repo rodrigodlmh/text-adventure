@@ -211,7 +211,7 @@ public class Main
 		 */
 		private static void Take(String item)
 		{
-			invClass.AddItemToInventory(item);
+			//invClass.AddItemToInventory(item);
 		}
 		/**
 		 * Use an item on something in the room

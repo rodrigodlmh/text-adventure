@@ -14,9 +14,7 @@ public class Inventory {
 	private boolean inventoryIsFull = false;
 	
 	// Function to add item to the inventory
-	boolean AddItemToInventory(String itemName) {
-		Item item = null;
-		item.itemName = itemName;
+	boolean AddItemToInventory(Item item) {
 		// Check if iventory is full
 		if(!inventoryIsFull) {
 			// Add item to the item arraylist
@@ -35,7 +33,7 @@ public class Inventory {
 	
 	public void DisplayInventory() {
 		for(int i = 0; i < items.size(); i++) {
-			System.out.println(String.valueOf(i)+ items.get(i).itemName);
+			System.out.println(items.get(i).itemName);
 		}
 	}
 	
