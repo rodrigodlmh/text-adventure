@@ -387,13 +387,13 @@ public class Main
 							}
 							else
 							{
-								if(items[i - 1][j] == 0)
+								if(roomClass.MovePlayer(i - 1, j) == null)
 								{
 									System.out.println("You see nothing");
 								}
 								else
 								{
-									System.out.println("You see a " + items[i - 1][j]);
+									System.out.println("You see a " + roomClass.MovePlayer(i - 1, j).itemName);
 								}
 								
 								i = room[0].length;
@@ -408,13 +408,13 @@ public class Main
 							}
 							else
 							{
-								if(items[i + 1][j] == 0)
+								if(roomClass.MovePlayer(i + 1, j) == null)
 								{
 									System.out.println("You see nothing");
 								}
 								else
 								{
-									System.out.println("You see a " + items[i + 1][j]);
+									System.out.println("You see a " + roomClass.MovePlayer(i + 1, j).itemName);
 								}
 								
 								i = room[0].length;
@@ -429,13 +429,13 @@ public class Main
 							}
 							else
 							{
-								if(items[i][j + 1] == 0)
+								if(roomClass.MovePlayer(i, j + 1) == null)
 								{
 									System.out.println("You see nothing");
 								}
 								else
 								{
-									System.out.println("You see a " + items[i][j + 1]);
+									System.out.println("You see a " + roomClass.MovePlayer(i, j + 1).itemName);
 								}
 								
 								i = room[0].length;
@@ -450,13 +450,13 @@ public class Main
 							}
 							else
 							{
-								if(items[i][j - 1] == 0)
+								if(roomClass.MovePlayer(i, j - 1) == null)
 								{
 									System.out.println("You see nothing");
 								}
 								else
 								{
-									System.out.println("You see a " + items[i][j - 1]);
+									System.out.println("You see a " + roomClass.MovePlayer(i, j - 1).itemName);
 								}
 								
 								i = room[0].length;
@@ -469,6 +469,5 @@ public class Main
 		}
 		
 		static int[][] room = new int[3][3];
-		static int[][] items = roomClass.getGrid();
 	}
 }

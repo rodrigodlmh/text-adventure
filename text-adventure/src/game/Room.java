@@ -80,24 +80,20 @@ public class Room implements Serializable {
 	 * @param ycord
 	 * @return Item
 	 */
-	/*public Item MovePlayer(int xcord, int ycord) {
+	public Item MovePlayer(int xcord, int ycord) {
 		switch (grid[xcord][ycord]) {
 			case 1:
 				return item1;
-			break;
 			case 2:
 				return item2;
-			break;
 			case 3:
 				return item3;
-			break;
 			case 4:
 				return item4;
-			break;
 			default:
-				break;
+				return null;
 		}
-	}*/
+	}
 
 	@Override
 	public String toString() {
