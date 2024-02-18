@@ -211,7 +211,20 @@ public class Main
 		 */
 		private static void Take(String item)
 		{
-			//invClass.AddItemToInventory(item);
+			for(int i = 0; i < roomClass.getGrid()[0].length; i++)
+			{
+				for(int j = 0; j < roomClass.getGrid()[1].length; j++)
+				{
+					if(roomClass.getGrid()[i][j] != 0 && room[i][j] == 1)
+					{
+						//invClass.AddItemToInventory(item);
+					}
+					else
+					{
+						System.out.println("Nothing to take");
+					}
+				}
+			}
 		}
 		/**
 		 * Use an item on something in the room
@@ -227,7 +240,20 @@ public class Main
 		 */
 		private static void Interact(String object)
 		{
-			System.out.println("You interacted with the " + object);
+			for(int i = 0; i < roomClass.getGrid()[0].length; i++)
+			{
+				for(int j = 0; j < roomClass.getGrid()[1].length; j++)
+				{
+					if(roomClass.getGrid()[i][j] != 0 && room[i][j] == 1)
+					{
+						
+					}
+					else
+					{
+						System.out.println("Nothing to interact with");
+					}
+				}
+			}
 		}
 		/**
 		 * View something you may lose track of
