@@ -16,10 +16,13 @@ public class Main
 	private static String verb;
 	private static String noun;
 	private static boolean end = false;
+	private static boolean statueMoved = false;
+	private static boolean deskOpened = false;
+	private static boolean torchLit = false;
 	private static Locale en = new Locale("en");
 	private static Locale es = new Locale("es");
-	private static LocalTime currentTime = LocalTime.now();
 	// Times for checking time of day user is currently at
+	private static LocalTime currentTime = LocalTime.now();
 	private static LocalTime morning1 = LocalTime.of(23, 59);
 	private static LocalTime morning2 = LocalTime.of(12, 0);
 	private static LocalTime afternoon1 = LocalTime.of(11, 59);
@@ -223,7 +226,18 @@ public class Main
 				{
 					if(roomClass.getGrid()[i][j] != 0 && room[i][j] == 1)
 					{
-						//invClass.AddItemToInventory(item);
+						if(item == "torch")
+						{
+							torchLit = true;
+							
+							System.out.println("You took the torch and can now see your surroundings");
+						}
+						else
+						{
+							//invClass.AddItemToInventory(item);
+							
+							System.out.println("You took the " + item);
+						}
 					}
 					else
 					{
@@ -252,7 +266,22 @@ public class Main
 				{
 					if(roomClass.getGrid()[i][j] != 0 && room[i][j] == 1)
 					{
-						
+						if(object.equals("statue") && statueMoved == false)
+						{
+							statueMoved = true;
+							
+							System.out.println("You moved the statue, and underneath is a button that got released. You hear something change in the room.");
+						}
+						if(object.equals("desk") && deskOpened == false)
+						{
+							deskOpened = true;
+							
+							System.out.println("Inside the drawer of the desk, you find a well-used book. It has been added to your inventory.");
+							
+							//Book book = new Book("book");
+							
+							//invClass.AddItemToInventory(book);
+						}
 					}
 					else
 					{
@@ -426,88 +455,178 @@ public class Main
 				{
 					if(room[i][j] == 1)
 					{
-						if(direction.equals("north"))
+						if(roomClass.GetName().equals("library") && torchLit == false)
 						{
-							if(i == 0)
+							if(direction.equals("north"))
 							{
-								System.out.println("You can stare at walls another time");
-							}
-							else
-							{
-								if(roomClass.MovePlayer(i - 1, j) == null)
+								if(i == 0)
 								{
-									System.out.println("You see nothing");
+									System.out.println("You can stare at walls another time");
 								}
 								else
 								{
-									System.out.println("You see a " + roomClass.MovePlayer(i - 1, j).itemName);
+									if(roomClass.MovePlayer(i - 1, j).itemName.equals("torch"))
+									{
+										System.out.println("You see a lit torch");
+									}
+									else
+									{
+										System.out.println("It's too dark to see");
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
 								}
-								
-								i = room[0].length;
-								j = room[1].length;
+							}
+							else if(direction.equals("south"))
+							{
+								if(i == 2)
+								{
+									System.out.println("You can stare at walls another time");
+								}
+								else
+								{
+									if(roomClass.MovePlayer(i + 1, j).itemName.equals("torch"))
+									{
+										System.out.println("You see a lit torch");
+									}
+									else
+									{
+										System.out.println("It's too dark to see");
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
+								}
+							}
+							else if(direction.equals("east"))
+							{
+								if(j == 2)
+								{
+									System.out.println("You can stare at walls another time");
+								}
+								else
+								{
+									if(roomClass.MovePlayer(i, j + 1).itemName.equals("torch"))
+									{
+										System.out.println("You see a lit torch");
+									}
+									else
+									{
+										System.out.println("It's too dark to see");
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
+								}
+							}
+							else if(direction.equals("west"))
+							{
+								if(j == 0)
+								{
+									System.out.println("You can stare at walls another time");
+								}
+								else
+								{
+									if(roomClass.MovePlayer(i, j - 1).itemName.equals("torch"))
+									{
+										System.out.println("You see a lit torch");
+									}
+									else
+									{
+										System.out.println("It's too dark to see");
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
+								}
 							}
 						}
-						else if(direction.equals("south"))
+						else
 						{
-							if(i == 2)
+							if(direction.equals("north"))
 							{
-								System.out.println("You can stare at walls another time");
-							}
-							else
-							{
-								if(roomClass.MovePlayer(i + 1, j) == null)
+								if(i == 0)
 								{
-									System.out.println("You see nothing");
+									System.out.println("You can stare at walls another time");
 								}
 								else
 								{
-									System.out.println("You see a " + roomClass.MovePlayer(i + 1, j).itemName);
+									if(roomClass.MovePlayer(i - 1, j) == null)
+									{
+										System.out.println("You see nothing");
+									}
+									else
+									{
+										System.out.println("You see a " + roomClass.MovePlayer(i - 1, j).itemName);
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
 								}
-								
-								i = room[0].length;
-								j = room[1].length;
 							}
-						}
-						else if(direction.equals("east"))
-						{
-							if(j == 2)
+							else if(direction.equals("south"))
 							{
-								System.out.println("You can stare at walls another time");
-							}
-							else
-							{
-								if(roomClass.MovePlayer(i, j + 1) == null)
+								if(i == 2)
 								{
-									System.out.println("You see nothing");
+									System.out.println("You can stare at walls another time");
 								}
 								else
 								{
-									System.out.println("You see a " + roomClass.MovePlayer(i, j + 1).itemName);
+									if(roomClass.MovePlayer(i + 1, j) == null)
+									{
+										System.out.println("You see nothing");
+									}
+									else
+									{
+										System.out.println("You see a " + roomClass.MovePlayer(i + 1, j).itemName);
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
 								}
-								
-								i = room[0].length;
-								j = room[1].length;
 							}
-						}
-						else if(direction.equals("west"))
-						{
-							if(j == 0)
+							else if(direction.equals("east"))
 							{
-								System.out.println("You can stare at walls another time");
-							}
-							else
-							{
-								if(roomClass.MovePlayer(i, j - 1) == null)
+								if(j == 2)
 								{
-									System.out.println("You see nothing");
+									System.out.println("You can stare at walls another time");
 								}
 								else
 								{
-									System.out.println("You see a " + roomClass.MovePlayer(i, j - 1).itemName);
+									if(roomClass.MovePlayer(i, j + 1) == null)
+									{
+										System.out.println("You see nothing");
+									}
+									else
+									{
+										System.out.println("You see a " + roomClass.MovePlayer(i, j + 1).itemName);
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
 								}
-								
-								i = room[0].length;
-								j = room[1].length;
+							}
+							else if(direction.equals("west"))
+							{
+								if(j == 0)
+								{
+									System.out.println("You can stare at walls another time");
+								}
+								else
+								{
+									if(roomClass.MovePlayer(i, j - 1) == null)
+									{
+										System.out.println("You see nothing");
+									}
+									else
+									{
+										System.out.println("You see a " + roomClass.MovePlayer(i, j - 1).itemName);
+									}
+									
+									i = room[0].length;
+									j = room[1].length;
+								}
 							}
 						}
 					}
