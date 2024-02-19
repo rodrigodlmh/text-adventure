@@ -30,6 +30,8 @@ public class Main
 	private static Room roomClass = new Room();
 	// New inventory
 	private static Inventory invClass = new Inventory();
+	// New player
+	private static Player playClass = new Player();
 	
 	public static void main(String[] args) 
 	{
@@ -157,6 +159,10 @@ public class Main
 			{
 				Actions.Interact(noun);
 			}
+			else if(verb.equals("fight"))
+			{
+				Actions.Fight(noun);
+			}
 			else if(verb.equals("view") && (noun.equals("inventory") || noun.equals("position")))
 			{
 				Actions.View(noun);
@@ -253,6 +259,21 @@ public class Main
 						System.out.println("Nothing to interact with");
 					}
 				}
+			}
+		}
+		/**
+		 * Fights with an entity and affects relevant stats
+		 * @param entity
+		 */
+		private static void Fight(String entity)
+		{
+			if(playClass.GetShield() == true)
+			{
+				playClass.SetHealth(10);
+			}
+			else 
+			{
+				playClass.SetHealth(20);
 			}
 		}
 		/**
