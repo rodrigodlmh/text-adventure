@@ -147,19 +147,19 @@ public class Main
 			{
 				Actions.Help(noun);
 			}
-			else if(verb.equals("take"))
+			else if(verb.equals("take") && (noun.equals("key") || noun.equals("torch") || noun.equals("shield") || noun.equals("potion")))
 			{
 				Actions.Take(noun);
 			}
-			else if(verb.equals("use"))
+			else if(verb.equals("use") && (noun.equals("key") || noun.equals("book") || noun.equals("potion")))
 			{
 				Actions.Use(noun);
 			}
-			else if(verb.equals("interact"))
+			else if(verb.equals("interact") && (noun.equals("statue") || noun.equals("desk")))
 			{
 				Actions.Interact(noun);
 			}
-			else if(verb.equals("fight"))
+			else if(verb.equals("fight") && (noun.equals("troll") || noun.equals("ogre") || noun.equals("goblin") || noun.equals("dragon")))
 			{
 				Actions.Fight(noun);
 			}
