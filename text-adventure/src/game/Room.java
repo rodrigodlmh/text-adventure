@@ -7,14 +7,19 @@ import java.io.Serializable;
 @JavaBean
 public class Room implements Serializable {
 
-	private String roomName;
+	private final String roomName;
 
-	private int[][]grid = new int[3][3];
+	private final int[][]grid = new int[3][3];
 
 	private Item item1;
 	private Item item2;
 	private Item item3;
 	private Item item4;
+
+	private int limit1;
+	private int limit2;
+	private int limit3;
+	private int limit4;
 
 	/**
 	 * <p>
@@ -23,13 +28,17 @@ public class Room implements Serializable {
 	 * If no item spawns, that space is left blank.
 	 * </p>
 	 *
-	 * @param Name
-	 * @param item1
-	 * @param item2
-	 * @param item2
-	 * @param item3
+	 * @param Name the name of the room
+	 * @param item1 an item passed into the room
+	 * @param item2 an item passed into the room
+	 * @param item3 an item passed into the room
+	 * @param item4 an item passed into the room
+	 * @param limit1 the maximum amount of item1
+	 * @param limit2 the maximum amount of item2
+	 * @param limit3 the maximum amount of item3
+	 * @param limit4 the maximum amount of item4
 	 */
-	public Room(String Name, Item item1, Item item2, Item item3, Item item4) {
+	public Room(String Name, Item item1, Item item2, Item item3, Item item4, int limit1, int limit2, int limit3, int limit4) {
 
 		this.roomName = Name;
 		this.item1 = item1;
@@ -37,24 +46,82 @@ public class Room implements Serializable {
 		this.item3 = item3;
 		this.item4 = item4;
 
-		for (int[] xcord : grid) {
-			for (int ycord : xcord) {
-				switch (new Random().nextInt(4)) {
-					case 1:
-						grid[xcord][ycord] = item1.Spawn() ? 1 : 0;
-						break;
-					case 2:
-						grid[xcord][ycord] = item1.Spawn() ? 2 : 0;
-						break;
-					case 3:
-						grid[xcord][ycord] = item1.Spawn() ? 3 : 0;
-						break;
-					case 4:
-						grid[xcord][ycord] = item1.Spawn() ? 4 : 0;
-						break;
-					default:
-						grid[xcord][ycord] = 0;
-						break;
+		this.limit1 = limit1;
+		this.limit2 = limit2;
+		this.limit3 = limit3;
+		this.limit4 = limit4;
+
+		int blanks = 9 - limit1 - limit2 - limit3 - limit4;
+
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				if (blanks > 0) {
+					switch (new Random().nextInt(0,4)) {
+						case 1:
+							if (limit1 > 0) {
+								grid[i][j] = 1;
+								limit1 -= 1;
+							} else {
+								grid[i][j] = 0;
+								blanks -= 1;
+							}
+							break;
+						case 2:
+							if (limit2 > 0) {
+								grid[i][j] = 2;
+								limit2 -= 1;
+							} else {
+								grid[i][j] = 0;
+								blanks -= 1;
+							}
+							break;
+						case 3:
+							if (limit3 > 0) {
+								grid[i][j] = 3;
+								limit3 -= 1;
+							} else {
+								grid[i][j] = 0;
+								blanks -= 1;
+							}
+							break;
+						case 4:
+							if (limit4 > 0) {
+								grid[i][j] = 4;
+								limit4 -= 1;
+							} else {
+								grid[i][j] = 0;
+								blanks -= 1;
+							}
+							break;
+						default:
+							grid[i][j] = 0;
+							blanks -= 1;
+							break;
+					}
+
+				} else {
+					switch (new Random().nextInt(1,4)) {
+						case 1:
+							grid[i][j] = 2;
+							limit1 -= 1;
+							break;
+						case 2:
+							grid[i][j] = 2;
+							limit2 -= 1;
+							break;
+						case 3:
+							grid[i][j] = 3;
+							limit3 -= 1;
+							break;
+						case 4:
+							grid[i][j] = 4;
+							limit4 -= 1;
+							break;
+						default:
+							grid[i][j] = 0;
+							blanks -= 1;
+							break;
+					}
 				}
 			}
 		}
@@ -64,29 +131,21 @@ public class Room implements Serializable {
 	/**
 	 * <p>
 	 * This method accepts a set of x y cords and returns an item for the player to interact with.
+	 * TODO This should return an item class directly
 	 * </p>
 	 *
 	 * @param xcord
 	 * @param ycord
 	 * @return Item
 	 */
-	public Item MovePlayer(int xcord, int ycord) {
-		switch (grid[xcord][ycord]) {
-			case 1:
-				return item1;
-			break;
-			case 2:
-				return item2;
-			break;
-			case 3:
-				return item3;
-			break;
-			case 4:
-				return item4;
-			break;
-			default:
-				break;
-		}
+	public int MovePlayer(int xcord, int ycord) {
+		return switch (grid[xcord][ycord]) {
+			case 1 -> 1;
+			case 2 -> 2;
+			case 3 -> 3;
+			case 4 -> 4;
+			default -> 0;
+		};
 	}
 
 	@Override
