@@ -135,15 +135,15 @@ public class Main
 	private static void Parser(String input)
 	{
 		// Split the input into an array
-		String newInput = input.replaceAll("\s+", " ").trim();
+		String newInput = input.replaceAll("\s+", " ").trim().toLowerCase();
 		String[] strings = newInput.split(" ");
 		
 		// Ensure the input only contains a verb and a noun
 		if(strings.length == 2)
 		{
 			// Assign verb and noun to variables
-			verb = strings[0].toLowerCase();
-			noun = strings[1].toLowerCase();
+			verb = strings[0];
+			noun = strings[1];
 			
 			// Checks if verb and noun are valid for every command
 			if(verb.equals("help") && (noun.equals("english") || noun.equals("spanish")))
