@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,11 +18,16 @@ public class Main
 	private static String verb;
 	private static String noun;
 	private static boolean end = false;
-	private static boolean statueMoved = false;
-	private static boolean deskOpened = false;
 	private static boolean torchLit = false;
-	private static Locale en = new Locale("en");
-	private static Locale es = new Locale("es");
+	// Language interfaces
+	private static Supplier<Locale> en = () -> new Locale("en");
+	private static Supplier<Locale> es = () -> new Locale("es");
+	private static BiConsumer<Locale, String> message = (x, y) ->
+	{
+		ResourceBundle rb = ResourceBundle.getBundle("Welcome", x);
+		
+		System.out.println(rb.getString(y));
+	};
 	// Times for checking time of day user is currently at
 	private static LocalTime currentTime = LocalTime.now();
 	private static LocalTime morning1 = LocalTime.of(23, 59);
@@ -29,8 +36,12 @@ public class Main
 	private static LocalTime afternoon2 = LocalTime.of(18, 0);
 	// Get user input
 	private static Scanner input = new Scanner(System.in);
-	// New room
-	private static Room roomClass = new Room();
+	// New rooms
+	private static Room dungeon = new Room();
+	private static Room library = new Room();
+	private static Room options = new Room();
+	private static Room combat = new Room();
+	private static Room currentRoom = dungeon;
 	// New inventory
 	private static Inventory invClass = new Inventory();
 	// New player
@@ -48,43 +59,39 @@ public class Main
 				String language = input.nextLine();
 				if(language.toLowerCase().trim().equals("english"))
 				{
-					ResourceBundle rb = ResourceBundle.getBundle("Welcome", en);
-					
 					if(currentTime.isAfter(morning1) && currentTime.isBefore(morning2))
 					{
-						System.out.print(rb.getString("Morning"));
+						message.accept(en.get(), "Morning");
 					}
 					else if(currentTime.isAfter(afternoon1) && currentTime.isBefore(afternoon2))
 					{
-						System.out.print(rb.getString("Afternoon"));
+						message.accept(en.get(), "Afternoon");
 					}
 					else
 					{
-						System.out.print(rb.getString("Evening"));
+						message.accept(en.get(), "Evening");
 					}
 					
-					System.out.println(rb.getString("Welcome"));
+					message.accept(en.get(), "Welcome");
 					
 					end = true;
 				}
 				else if(language.toLowerCase().trim().equals("spanish"))
 				{
-					ResourceBundle rb = ResourceBundle.getBundle("Welcome", es);
-					
 					if(currentTime.isAfter(morning1) && currentTime.isBefore(morning2))
 					{
-						System.out.print(rb.getString("Morning"));
+						message.accept(es.get(), "Morning");
 					}
 					else if(currentTime.isAfter(afternoon1) && currentTime.isBefore(afternoon2))
 					{
-						System.out.print(rb.getString("Afternoon"));
+						message.accept(es.get(), "Afternoon");
 					}
 					else
 					{
-						System.out.print(rb.getString("Evening"));
+						message.accept(es.get(), "Evening");
 					}
 					
-					System.out.println(rb.getString("Welcome"));
+					message.accept(es.get(), "Welcome");
 					
 					end = true;
 				}
@@ -205,13 +212,11 @@ public class Main
 		{
 			if(lang.equals("english"))
 			{
-				ResourceBundle rb = ResourceBundle.getBundle("Welcome", en);
-				System.out.println(rb.getString("Help"));
+				message.accept(en.get(), "Help");
 			}
 			else if(lang.equals("spanish"))
 			{
-				ResourceBundle rb = ResourceBundle.getBundle("Welcome", es);
-				System.out.println(rb.getString("Help"));
+				message.accept(es.get(), "Help");
 			}
 		}
 		/**
@@ -220,11 +225,12 @@ public class Main
 		 */
 		private static void Take(String item)
 		{
-			for(int i = 0; i < roomClass.getGrid()[0].length; i++)
+			for(int i = 0; i < currentRoom.getGrid()[0].length; i++)
 			{
-				for(int j = 0; j < roomClass.getGrid()[1].length; j++)
+				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
 				{
-					if(roomClass.getGrid()[i][j] != 0 && room[i][j] == 1)
+					if(currentRoom.getGrid()[i][j] != null && currentRoom.getGrid()[i][j].takeable == true && 
+							currentRoom.getGrid()[i][j].used == false && room[i][j] == 1)
 					{
 						if(item == "torch")
 						{
@@ -234,6 +240,8 @@ public class Main
 						}
 						else
 						{
+							currentRoom.getGrid()[i][j].used = true;
+							
 							//invClass.AddItemToInventory(item);
 							
 							System.out.println("You took the " + item);
@@ -260,21 +268,21 @@ public class Main
 		 */
 		private static void Interact(String object)
 		{
-			for(int i = 0; i < roomClass.getGrid()[0].length; i++)
+			for(int i = 0; i < currentRoom.getGrid()[0].length; i++)
 			{
-				for(int j = 0; j < roomClass.getGrid()[1].length; j++)
+				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
 				{
-					if(roomClass.getGrid()[i][j] != 0 && room[i][j] == 1)
+					if(currentRoom.getGrid()[i][j] != null && currentRoom.getGrid()[i][j].used == false && room[i][j] == 1)
 					{
-						if(object.equals("statue") && statueMoved == false)
+						if(object.equals("statue") && currentRoom.getGrid()[i][j].itemName.equals("statue"))
 						{
-							statueMoved = true;
+							currentRoom.getGrid()[i][j].used = true;
 							
 							System.out.println("You moved the statue, and underneath is a button that got released. You hear something change in the room.");
 						}
-						if(object.equals("desk") && deskOpened == false)
+						if(object.equals("desk") && currentRoom.getGrid()[i][j].itemName.equals("desk"))
 						{
-							deskOpened = true;
+							currentRoom.getGrid()[i][j].used = true;
 							
 							System.out.println("Inside the drawer of the desk, you find a well-used book. It has been added to your inventory.");
 							
@@ -455,7 +463,7 @@ public class Main
 				{
 					if(room[i][j] == 1)
 					{
-						if(roomClass.GetName().equals("library") && torchLit == false)
+						if(currentRoom == library && torchLit == false)
 						{
 							if(direction.equals("north"))
 							{
@@ -465,7 +473,7 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i - 1, j).itemName.equals("torch"))
+									if(currentRoom.MovePlayer(i - 1, j).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -486,7 +494,7 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i + 1, j).itemName.equals("torch"))
+									if(currentRoom.MovePlayer(i + 1, j).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -507,7 +515,7 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i, j + 1).itemName.equals("torch"))
+									if(currentRoom.MovePlayer(i, j + 1).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -528,7 +536,7 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i, j - 1).itemName.equals("torch"))
+									if(currentRoom.MovePlayer(i, j - 1).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -552,13 +560,13 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i - 1, j) == null)
+									if(currentRoom.MovePlayer(i - 1, j) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + roomClass.MovePlayer(i - 1, j).itemName);
+										System.out.println("You see a " + currentRoom.MovePlayer(i - 1, j).itemName);
 									}
 									
 									i = room[0].length;
@@ -573,13 +581,13 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i + 1, j) == null)
+									if(currentRoom.MovePlayer(i + 1, j) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + roomClass.MovePlayer(i + 1, j).itemName);
+										System.out.println("You see a " + currentRoom.MovePlayer(i + 1, j).itemName);
 									}
 									
 									i = room[0].length;
@@ -594,13 +602,13 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i, j + 1) == null)
+									if(currentRoom.MovePlayer(i, j + 1) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + roomClass.MovePlayer(i, j + 1).itemName);
+										System.out.println("You see a " + currentRoom.MovePlayer(i, j + 1).itemName);
 									}
 									
 									i = room[0].length;
@@ -615,13 +623,13 @@ public class Main
 								}
 								else
 								{
-									if(roomClass.MovePlayer(i, j - 1) == null)
+									if(currentRoom.MovePlayer(i, j - 1) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + roomClass.MovePlayer(i, j - 1).itemName);
+										System.out.println("You see a " + currentRoom.MovePlayer(i, j - 1).itemName);
 									}
 									
 									i = room[0].length;
