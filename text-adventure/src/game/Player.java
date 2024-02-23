@@ -10,11 +10,7 @@ public class Player {
 	
 	//
 	public void GetAllItemsInRoom(Item[] items) {
-		for(Item item : items) {
-			if(item.Interact()) {
-				inventory.AddItemToInventory(item);	
-			}
-		}
+
 	}
 	
 	public void GetCurrentRoom(/*Room currentRoom*/){
@@ -22,12 +18,10 @@ public class Player {
 	}
 	
 	public void GetAproachedItem(Item item) {
-		if(item.Interact()) {
-			inventory.AddItemToInventory(item);
-		}
+		
 	}
 	
 	public void DisplayInventory() {
-		inventory.DisplayInventory();
+		inventory.Display();
 	}
 }

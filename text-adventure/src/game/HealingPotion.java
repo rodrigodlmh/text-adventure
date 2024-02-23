@@ -1,32 +1,22 @@
 package game;
 
-import java.util.Scanner;
+import java.util.Random;
 
 public class HealingPotion extends Item{
 	
-	@Override
-	boolean Interact() {
-		
-		Scanner scanner = new Scanner(System.in);
-		System.out.println(itemName);
-		System.out.println(itemDescription);
-		System.out.println("Do you want to add this item to your inventory?");
-		
-		// Get input (obviously done different once we have a proper verb-noun system
-		String decision = scanner.nextLine();
-		scanner.close();
-		
-		if(decision.equals("Yes")) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	int healthRecovery;
+	
+	HealingPotion() {
+		itemName = "Healing Potion";
+		itemDescription = "A potion that heals up to 50 hp";
+		used = false;
+		Random random = new Random();
+		healthRecovery = random.nextInt(50 - 25 + 1) + 25;
 	}
 
 	@Override
-	void SetValues() {
-		this.itemName = "Healing Potion";
-		this.itemDescription = "Heals a random amount of health";
+	void Interact() {
+		// TODO Auto-generated method stub
+		
 	}
 }
