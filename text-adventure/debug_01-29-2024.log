@@ -1,0 +1,6 @@
+01-29-2024 11:43:32.497 DEBUG [game.Main] - java.lang.ArithmeticException: / by zero
+01-29-2024 13:52:27.076 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+01-29-2024 13:54:37.529 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+01-29-2024 14:22:17.760 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2
+01-29-2024 14:22:50.553 DEBUG [game.Main] - java.lang.NullPointerException: Cannot store to object array because "newStrings" is null
+01-29-2024 14:27:13.207 DEBUG [game.Main] - java.lang.NullPointerException: Cannot invoke "String.trim()" because "newStrings[0]" is null

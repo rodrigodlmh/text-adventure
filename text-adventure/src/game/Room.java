@@ -15,7 +15,22 @@ public class Room implements Serializable {
 	private Item item2;
 	private Item item3;
 	private Item item4;
+	
+	public String GetName()
+	{
+		return roomName;
+	}
+	
+	public int[][] getGrid()
+	{
+		return grid;
+	}
 
+	public Room()
+	{
+		
+	}
+	
 	/**
 	 * <p>
 	 * The constructor takes a name and four items.

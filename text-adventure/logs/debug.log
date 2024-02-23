@@ -1,0 +1,2 @@
+02-12-2024 12:33:03.814 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+02-12-2024 18:28:40.408 DEBUG [game.Main] - java.lang.NullPointerException: Cannot assign field "itemName" because "item" is null
