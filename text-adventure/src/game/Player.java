@@ -31,24 +31,17 @@ public class Player {
 	
 	//
 	public void GetAllItemsInRoom(Item[] items) {
-		for(Item item : items) {
-			if(item.Interact()) {
-				//inventory.AddItemToInventory(item);	
-			}
-		}
 	}
 	
 	public void GetCurrentRoom(/*Room currentRoom*/){
 	
 	}
 	
-	public void GetApproachedItem(Item item) {
-		if(item.Interact()) {
-			//inventory.AddItemToInventory(item);
-		}
+	public void GetAproachedItem(Item item) {
+		
 	}
 	
 	public void DisplayInventory() {
-		inventory.DisplayInventory();
+		inventory.Display();
 	}
 }

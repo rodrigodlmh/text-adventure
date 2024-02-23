@@ -4,8 +4,13 @@ public abstract class Item {
 	
 	public String itemName;
 	public String itemDescription;
+	public boolean used;
 	
-	abstract boolean Interact();
+	Item() {
+		itemName = "";
+		itemDescription = "";
+		used = false;
+	}
 	
-	abstract void SetValues();
+	abstract void Interact();
 }

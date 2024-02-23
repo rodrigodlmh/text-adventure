@@ -7,9 +7,9 @@ import java.io.Serializable;
 @JavaBean
 public class Room implements Serializable {
 
-	private String roomName;
+	private final String roomName;
 
-	private int[][] grid = new int[3][3];
+	private final Item[][]grid = new Item[3][3];
 
 	private Item item1;
 	private Item item2;
@@ -34,16 +34,16 @@ public class Room implements Serializable {
 	/**
 	 * <p>
 	 * The constructor takes a name and four items.
-	 * The room is then filled with the items based on each item's spawn rate.
+	 * It also takes a limit for each item.
 	 * If no item spawns, that space is left blank.
 	 * </p>
 	 *
-	 * @param Name
-	 * @param item1
-	 * @param item2
-	 * @param item2
-	 * @param item3
-	 */
+	 * @param Name the name of the room
+	 * @param item1 an item passed into the room
+	 * @param item2 an item passed into the room
+	 * @param item3 an item passed into the room
+	 * @param item4 an item passed into the room
+	 **/
 	public Room(String Name, Item item1, Item item2, Item item3, Item item4) {
 
 		this.roomName = Name;
@@ -52,28 +52,27 @@ public class Room implements Serializable {
 		this.item3 = item3;
 		this.item4 = item4;
 
-		/*for (int[] xcord : grid) {
-			for (int ycord : xcord) {
-				switch (new Random().nextInt(4)) {
-					case 1:
-						grid[xcord][ycord] = item1.Spawn() ? 1 : 0;
-						break;
-					case 2:
-						grid[xcord][ycord] = item1.Spawn() ? 2 : 0;
-						break;
-					case 3:
-						grid[xcord][ycord] = item1.Spawn() ? 3 : 0;
-						break;
-					case 4:
-						grid[xcord][ycord] = item1.Spawn() ? 4 : 0;
-						break;
-					default:
-						grid[xcord][ycord] = 0;
-						break;
-				}
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+					switch (new Random().nextInt(0,4)) {
+						case 1:
+							grid[i][j] = item1;
+							break;
+						case 2:
+							grid[i][j] = item2;
+							break;
+						case 3:
+							grid[i][j] = item3;
+							break;
+						case 4:
+							grid[i][j] = item4;
+							break;
+						default:
+							grid[i][j] = null;
+							break;
+					}
 			}
-		}*/
-
+		}
 	}
 
 	/**
@@ -81,23 +80,16 @@ public class Room implements Serializable {
 	 * This method accepts a set of x y cords and returns an item for the player to interact with.
 	 * </p>
 	 *
-	 * @param xcord
-	 * @param ycord
+	 * @param xcord x cord for the grid
+	 * @param ycord y cord for the grid
 	 * @return Item
 	 */
 	public Item MovePlayer(int xcord, int ycord) {
-		switch (grid[xcord][ycord]) {
-			case 1:
-				return item1;
-			case 2:
-				return item2;
-			case 3:
-				return item3;
-			case 4:
-				return item4;
-			default:
-				return null;
-		}
+		return grid[xcord][ycord];
+	}
+
+	public Item Look(int xcord, int ycord) {
+		return grid[xcord][ycord];
 	}
 
 	@Override
