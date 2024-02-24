@@ -7,7 +7,7 @@ import java.io.Serializable;
 @JavaBean
 public class Room implements Serializable {
 
-	private final String roomName;
+	private String roomName;
 
 	private final Item[][]grid = new Item[3][3];
 
@@ -21,7 +21,7 @@ public class Room implements Serializable {
 		return roomName;
 	}
 	
-	public int[][] getGrid()
+	public Item[][] getGrid()
 	{
 		return grid;
 	}
