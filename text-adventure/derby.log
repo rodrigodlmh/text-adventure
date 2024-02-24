@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Feb 23 17:57:17 CST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-018d-d866-df7b-00000f3cfa00 
+on database directory C:\Java 2\text-adventure\text-adventure\inventorydb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@22d8cfe0 
+Loaded from file:/C:/Java%202/text-adventure/text-adventure/lib/derby.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=17.0.8+7
+user.dir=C:\Java 2\text-adventure\text-adventure
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
