@@ -2,10 +2,10 @@ package game;
 
 public class Chest extends Item{
 	
-	Item itemInChest;
+	public Item itemInChest;
 	
 	Chest() {
-		itemName = "Chest";
+		itemName = "chest";
 		itemDescription = "A chest that could hold valuables";
 		used = false;
 		itemInChest = new Sword();

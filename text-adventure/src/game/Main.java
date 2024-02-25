@@ -19,6 +19,7 @@ public class Main
 	private static String noun;
 	private static boolean end = false;
 	private static boolean torchLit = false;
+	private static boolean stairOpen = false;
 	// Language interfaces
 	private static Supplier<Locale> en = () -> new Locale("en");
 	private static Supplier<Locale> es = () -> new Locale("es");
@@ -37,13 +38,14 @@ public class Main
 	// Get user input
 	private static Scanner input = new Scanner(System.in);
 	// New rooms
-	private static Room dungeon = new Room();
-	private static Room library = new Room();
-	private static Room options = new Room();
-	private static Room combat = new Room();
+	private static Room dungeon = new Room("dungeon", new Key(), new Chest(), new Statue(), new Monster("troll", "Blocking the stairway"));
+	private static Room library = new Room("library", new Torch(), new Desk(), new Bookshelf(), new Shield());
+	private static Room options = new Room("options", new Key(), new Door("door1"), new Door("door2"), new Door("door3"));
+	private static Room combat = new Room("combat", new HealingPotion(), new Monster("ogre", "Lesser monster"), 
+			new Monster("goblin", "Lesser monster"), new Monster("dragon", "Guarding door"));
 	private static Room currentRoom = dungeon;
 	// New inventory
-	private static Inventory invClass = new Inventory();
+	//private static Inventory invClass = new Inventory();
 	// New player
 	private static Player playClass = new Player();
 	
@@ -102,6 +104,8 @@ public class Main
 			}
 				
 			end = false;
+			
+			System.out.println("You find yourself in the dungeon");
 			
 			// Run game until it's beaten
 			while(end == false)
@@ -229,27 +233,35 @@ public class Main
 			{
 				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
 				{
-					if(currentRoom.getGrid()[i][j] != null && currentRoom.getGrid()[i][j].takeable == true && 
-							currentRoom.getGrid()[i][j].used == false && room[i][j] == 1)
+					if(currentRoom.getGrid()[i][j] != null && room[i][j] == 1)
 					{
-						if(item == "torch")
+						if(item.equals("torch"))
 						{
 							torchLit = true;
 							
 							System.out.println("You took the torch and can now see your surroundings");
-						}
-						else
-						{
-							currentRoom.getGrid()[i][j].used = true;
 							
-							//invClass.AddItemToInventory(item);
+							i = room[0].length;
+							j = room[1].length;
+						}
+						else if(currentRoom.getGrid()[i][j].itemName.equals(item))
+						{
+							playClass.GetInventory().AddItem(currentRoom.getGrid()[i][j]);
 							
 							System.out.println("You took the " + item);
+							
+							currentRoom.getGrid()[i][j] = null;
+							
+							i = room[0].length;
+							j = room[1].length;
 						}
 					}
-					else
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
 					{
 						System.out.println("Nothing to take");
+						
+						i = room[0].length;
+						j = room[1].length;
 					}
 				}
 			}
@@ -260,7 +272,39 @@ public class Main
 		 */
 		private static void Use(String item)
 		{
-			System.out.println("You used the " + item);
+			for(int i = 0; i < currentRoom.getGrid()[0].length; i++)
+			{
+				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
+				{
+					if(currentRoom.getGrid()[i][j] != null && room[i][j] == 1)
+					{
+						if(currentRoom.getGrid()[i][j].itemName.equals("chest") && item.equals("key"))
+						{
+							Sword sword = new Sword();
+							
+							playClass.SetDamage(sword.baseDamageIncrease);
+							
+							playClass.GetInventory().AddItem(sword);
+							
+							playClass.GetInventory().DeleteItem(item);
+							
+							System.out.println("Inside the chest, you find a sword. You can now do battle.");
+							
+							currentRoom.getGrid()[i][j] = null;
+							
+							i = room[0].length;
+							j = room[1].length;
+						}
+					}
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					{
+						System.out.println("Nothing to use this item on");
+						
+						i = room[0].length;
+						j = room[1].length;
+					}
+				}
+			}
 		}
 		/**
 		 * Interact with an object in the room
@@ -272,28 +316,37 @@ public class Main
 			{
 				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
 				{
-					if(currentRoom.getGrid()[i][j] != null && currentRoom.getGrid()[i][j].used == false && room[i][j] == 1)
+					if(currentRoom.getGrid()[i][j] != null && room[i][j] == 1)
 					{
 						if(object.equals("statue") && currentRoom.getGrid()[i][j].itemName.equals("statue"))
 						{
-							currentRoom.getGrid()[i][j].used = true;
-							
 							System.out.println("You moved the statue, and underneath is a button that got released. You hear something change in the room.");
+							
+							stairOpen = true;
+							
+							currentRoom.getGrid()[i][j] = null;
+							
+							i = room[0].length;
+							j = room[1].length;
 						}
 						if(object.equals("desk") && currentRoom.getGrid()[i][j].itemName.equals("desk"))
 						{
-							currentRoom.getGrid()[i][j].used = true;
-							
 							System.out.println("Inside the drawer of the desk, you find a well-used book. It has been added to your inventory.");
 							
-							//Book book = new Book("book");
+							playClass.GetInventory().AddItem(new Book());
 							
-							//invClass.AddItemToInventory(book);
+							currentRoom.getGrid()[i][j] = null;
+							
+							i = room[0].length;
+							j = room[1].length;
 						}
 					}
-					else
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
 					{
 						System.out.println("Nothing to interact with");
+						
+						i = room[0].length;
+						j = room[1].length;
 					}
 				}
 			}
@@ -304,13 +357,54 @@ public class Main
 		 */
 		private static void Fight(String entity)
 		{
-			if(playClass.GetShield() == true)
+			for(int i = 0; i < currentRoom.getGrid()[0].length; i++)
 			{
-				playClass.SetHealth(10);
-			}
-			else 
-			{
-				playClass.SetHealth(20);
+				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
+				{
+					if(currentRoom.getGrid()[i][j] != null && room[i][j] == 1)
+					{
+						if(playClass.GetHealth() > 20 && playClass.GetShield() == false)
+						{
+							playClass.SetHealth(20);
+						}
+						else if(playClass.GetHealth() > 10 && playClass.GetShield() == true)
+						{
+							playClass.SetHealth(10);
+						}
+						else
+						{
+							System.out.println("You need to heal first");
+						}
+						
+						if(entity.equals("troll") && currentRoom.getGrid()[i][j].itemName.equals("troll"))
+						{
+							System.out.println("You strike down the troll, clearing the stairs to the next room. You find yourself in darkness");
+							
+							currentRoom = library;
+							
+							i = room[0].length;
+							j = room[1].length;
+						}
+						if(entity.equals("desk") && currentRoom.getGrid()[i][j].itemName.equals("desk"))
+						{
+							System.out.println("Inside the drawer of the desk, you find a well-used book. It has been added to your inventory.");
+							
+							playClass.GetInventory().AddItem(new Book());
+							
+							currentRoom.getGrid()[i][j] = null;
+							
+							i = room[0].length;
+							j = room[1].length;
+						}
+					}
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					{
+						System.out.println("Nothing to fight");
+						
+						i = room[0].length;
+						j = room[1].length;
+					}
+				}
 			}
 		}
 		/**
@@ -321,7 +415,7 @@ public class Main
 		{
 			if(noun.equals("inventory"))
 			{
-				invClass.Display();
+				playClass.DisplayInventory();
 			}
 			else
 			{
@@ -397,9 +491,6 @@ public class Main
 							{
 								room[i][j] = 0;
 								room[i - 1][j] = 1;
-								
-								i = room[0].length;
-								j = room[1].length;
 							}
 						}
 						else if(direction.equals("south"))
@@ -412,9 +503,6 @@ public class Main
 							{
 								room[i][j] = 0;
 								room[i + 1][j] = 1;
-								
-								i = room[0].length;
-								j = room[1].length;
 							}
 						}
 						else if(direction.equals("east"))
@@ -427,9 +515,6 @@ public class Main
 							{
 								room[i][j] = 0;
 								room[i][j + 1] = 1;
-								
-								i = room[0].length;
-								j = room[1].length;
 							}
 						}
 						else if(direction.equals("west"))
@@ -442,11 +527,11 @@ public class Main
 							{
 								room[i][j] = 0;
 								room[i][j - 1] = 1;
-								
-								i = room[0].length;
-								j = room[1].length;
 							}
 						}
+						
+						i = room[0].length;
+						j = room[1].length;
 					}
 				}
 			}
@@ -473,7 +558,7 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i - 1, j).itemName.equals("torch"))
+									if(currentRoom.Look(i - 1, j).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -481,9 +566,6 @@ public class Main
 									{
 										System.out.println("It's too dark to see");
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
 							else if(direction.equals("south"))
@@ -494,7 +576,7 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i + 1, j).itemName.equals("torch"))
+									if(currentRoom.Look(i + 1, j).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -502,9 +584,6 @@ public class Main
 									{
 										System.out.println("It's too dark to see");
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
 							else if(direction.equals("east"))
@@ -515,7 +594,7 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i, j + 1).itemName.equals("torch"))
+									if(currentRoom.Look(i, j + 1).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -523,9 +602,6 @@ public class Main
 									{
 										System.out.println("It's too dark to see");
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
 							else if(direction.equals("west"))
@@ -536,7 +612,7 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i, j - 1).itemName.equals("torch"))
+									if(currentRoom.Look(i, j - 1).itemName.equals("torch"))
 									{
 										System.out.println("You see a lit torch");
 									}
@@ -544,11 +620,11 @@ public class Main
 									{
 										System.out.println("It's too dark to see");
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
+							
+							i = room[0].length;
+							j = room[1].length;
 						}
 						else
 						{
@@ -560,17 +636,21 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i - 1, j) == null)
+									if(currentRoom.Look(i - 1, j) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + currentRoom.MovePlayer(i - 1, j).itemName);
+										if(currentRoom.Look(i - 1, j).itemName.equals("troll") && stairOpen == false)
+										{
+											System.out.println("You see gaps in the shape of a square, but you're not strong enough to move an entire chunk of floor");
+										}
+										else
+										{
+											System.out.println("You see a " + currentRoom.Look(i - 1, j).itemName);
+										}
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
 							else if(direction.equals("south"))
@@ -581,17 +661,21 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i + 1, j) == null)
+									if(currentRoom.Look(i + 1, j) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + currentRoom.MovePlayer(i + 1, j).itemName);
+										if(currentRoom.Look(i + 1, j).itemName.equals("troll") && stairOpen == false)
+										{
+											System.out.println("You see gaps in the shape of a square, but you're not strong enough to move an entire chunk of floor");
+										}
+										else
+										{
+											System.out.println("You see a " + currentRoom.Look(i + 1, j).itemName);
+										}
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
 							else if(direction.equals("east"))
@@ -602,17 +686,21 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i, j + 1) == null)
+									if(currentRoom.Look(i, j + 1) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + currentRoom.MovePlayer(i, j + 1).itemName);
+										if(currentRoom.Look(i, j + 1).itemName.equals("troll") && stairOpen == false)
+										{
+											System.out.println("You see gaps in the shape of a square, but you're not strong enough to move an entire chunk of floor");
+										}
+										else
+										{
+											System.out.println("You see a " + currentRoom.Look(i, j + 1).itemName);
+										}
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
 							else if(direction.equals("west"))
@@ -623,19 +711,26 @@ public class Main
 								}
 								else
 								{
-									if(currentRoom.MovePlayer(i, j - 1) == null)
+									if(currentRoom.Look(i, j - 1) == null)
 									{
 										System.out.println("You see nothing");
 									}
 									else
 									{
-										System.out.println("You see a " + currentRoom.MovePlayer(i, j - 1).itemName);
+										if(currentRoom.Look(i, j - 1).itemName.equals("troll") && stairOpen == false)
+										{
+											System.out.println("You see gaps in the shape of a square, but you're not strong enough to move an entire chunk of floor");
+										}
+										else
+										{
+											System.out.println("You see a " + currentRoom.Look(i, j - 1).itemName);
+										}
 									}
-									
-									i = room[0].length;
-									j = room[1].length;
 								}
 							}
+							
+							i = room[0].length;
+							j = room[1].length;
 						}
 					}
 				}

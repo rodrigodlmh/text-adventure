@@ -34,7 +34,6 @@ public class Room implements Serializable {
 	/**
 	 * <p>
 	 * The constructor takes a name and four items.
-	 * It also takes a limit for each item.
 	 * If no item spawns, that space is left blank.
 	 * </p>
 	 *
@@ -51,28 +50,33 @@ public class Room implements Serializable {
 		this.item2 = item2;
 		this.item3 = item3;
 		this.item4 = item4;
+		
+		grid[0][0] = item1;
+		grid[0][1] = item2;
+		grid[1][0] = item3;
+		grid[1][1] = item4;
 
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-					switch (new Random().nextInt(0,4)) {
-						case 1:
-							grid[i][j] = item1;
-							break;
-						case 2:
-							grid[i][j] = item2;
-							break;
-						case 3:
-							grid[i][j] = item3;
-							break;
-						case 4:
-							grid[i][j] = item4;
-							break;
-						default:
-							grid[i][j] = null;
-							break;
-					}
-			}
-		}
+//		for (int i = 0; i < grid.length; i++) {
+//			for (int j = 0; j < grid[i].length; j++) {
+//					switch (new Random().nextInt(0,4)) {
+//						case 1:
+//							grid[i][j] = item1;
+//							break;
+//						case 2:
+//							grid[i][j] = item2;
+//							break;
+//						case 3:
+//							grid[i][j] = item3;
+//							break;
+//						case 4:
+//							grid[i][j] = item4;
+//							break;
+//						default:
+//							grid[i][j] = null;
+//							break;
+//					}
+//			}
+//		}
 	}
 
 	/**
