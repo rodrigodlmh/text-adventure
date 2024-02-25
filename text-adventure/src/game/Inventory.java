@@ -124,22 +124,21 @@ public class Inventory {
 	}
 	
 	// Get item from inventory with a name. Can return null
-	Item GetItem(String itemName) 
+	String GetItem(String itemName) 
 	{
 		try (Connection connection = ds.getConnection()) 
 		{
 			String sql = "SELECT * FROM Item WHERE name = ?";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, itemName);
-			ResultSet set = statement.executeQuery(sql);
+			ResultSet set = statement.executeQuery();
 			while(set.next()) 
 			{
 				String name = set.getString("name");
 				
 				if(itemName.equals(name)) 
 				{
-					Item item = CreateItemWithName(itemName);
-					return item;
+					return itemName;
 				}
 			}
 			return null;

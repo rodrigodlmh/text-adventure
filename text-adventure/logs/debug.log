@@ -1,5 +1,4 @@
-02-24-2024 18:26:52.180 DEBUG [game.Main] - java.sql.SQLException: Statement.executeQuery() cannot be called with a statement that returns a row count.
-02-24-2024 18:28:33.766 DEBUG [game.Main] - java.sql.SQLSyntaxErrorException: Syntax error: Encountered "key" at line 1, column 31.
-02-24-2024 18:29:12.362 DEBUG [game.Main] - java.sql.SQLException: Statement.executeQuery() cannot be called with a statement that returns a row count.
-02-24-2024 18:30:41.785 DEBUG [game.Main] - java.sql.SQLSyntaxErrorException: Syntax error: Encountered "key" at line 1, column 34.
-02-24-2024 18:31:55.551 DEBUG [game.Main] - java.sql.SQLException: Statement.executeQuery() cannot be called with a statement that returns a row count.
+02-25-2024 15:01:17.593 DEBUG [game.Main] - java.sql.SQLException: Method 'executeQuery(String)' not allowed on prepared statement.
+02-25-2024 15:31:34.796 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
+02-25-2024 16:32:13.524 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
+02-25-2024 16:37:54.346 DEBUG [game.Main] - java.lang.NullPointerException: Cannot read field "itemName" because the return value of "game.Room.Look(int, int)" is null
