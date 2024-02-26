@@ -51,10 +51,10 @@ public class Room implements Serializable {
 		this.item3 = item3;
 		this.item4 = item4;
 		
-		grid[0][0] = item1;
-		grid[0][1] = item2;
-		grid[1][0] = item3;
-		grid[1][1] = item4;
+//		grid[0][0] = item1;
+//		grid[0][1] = item2;
+//		grid[1][0] = item3;
+//		grid[1][1] = item4;
 
 //		for (int i = 0; i < grid.length; i++) {
 //			for (int j = 0; j < grid[i].length; j++) {
