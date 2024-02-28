@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="text-adventure/src"/>
+	<classpathentry kind="lib" path="text-adventure/bin/log4j-api-2.17.2.jar"/>
+	<classpathentry kind="lib" path="text-adventure/bin/log4j-api-2.17.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="text-adventure/bin/log4j-core-2.17.2.jar"/>
+	<classpathentry kind="lib" path="text-adventure/bin/log4j-core-2.17.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/derby.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/derbyshared.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/derbytools.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/log4j-api-2.17.2.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/log4j-api-2.17.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/log4j-core-2.17.2.jar"/>
+	<classpathentry kind="lib" path="text-adventure/lib/log4j-core-2.17.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="text-adventure/Libraries/log4j-api-2.17.2.jar"/>
+	<classpathentry kind="lib" path="text-adventure/Libraries/log4j-api-2.17.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="text-adventure/Libraries/log4j-core-2.17.2.jar"/>
+	<classpathentry kind="lib" path="text-adventure/Libraries/log4j-core-2.17.2-javadoc.jar"/>
+	<classpathentry kind="output" path="out/production/text-adventure"/>
+</classpath>

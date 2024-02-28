@@ -6,6 +6,10 @@
 # BlueJ files
 *.ctxt
 
+# Derby DB
+Inventorydb/
+*.log
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

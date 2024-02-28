@@ -321,7 +321,7 @@ public class Main
 		{
 			if(noun.equals("inventory"))
 			{
-				invClass.DisplayInventory();
+				invClass.Display();
 			}
 			else
 			{
