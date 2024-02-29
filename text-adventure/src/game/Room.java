@@ -11,7 +11,7 @@ public class Room implements Serializable {
 
 	private String roomName;
 
-	private final Item[][]grid = new Item[3][3];
+	private Item[][] grid = new Item[3][3];
 
 	private Item item1;
 	private Item item2;
@@ -27,7 +27,7 @@ public class Room implements Serializable {
 	{
 		return grid;
 	}
-
+	
 	public Room()
 	{
 		
@@ -51,7 +51,7 @@ public class Room implements Serializable {
 		this.item2 = item2;
 		this.item3 = item3;
 		this.item4 = item4;
-
+		
 		// Create a list of coordinates
 		List<Coordinate> allCoordinates = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {

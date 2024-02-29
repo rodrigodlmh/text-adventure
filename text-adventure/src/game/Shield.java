@@ -5,7 +5,7 @@ public class Shield extends Item{
 	int recievedDamageDecrease;
 	
 	Shield() {
-		itemName = "Shield";
+		itemName = "shield";
 		itemDescription = "Decreases incoming damage";
 		used = false;
 		recievedDamageDecrease = 10;

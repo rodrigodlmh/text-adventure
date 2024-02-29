@@ -1,2 +1,4 @@
-02-12-2024 12:33:03.814 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
-02-12-2024 18:28:40.408 DEBUG [game.Main] - java.lang.NullPointerException: Cannot assign field "itemName" because "item" is null
+02-25-2024 15:01:17.593 DEBUG [game.Main] - java.sql.SQLException: Method 'executeQuery(String)' not allowed on prepared statement.
+02-25-2024 15:31:34.796 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
+02-25-2024 16:32:13.524 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
+02-25-2024 16:37:54.346 DEBUG [game.Main] - java.lang.NullPointerException: Cannot read field "itemName" because the return value of "game.Room.Look(int, int)" is null

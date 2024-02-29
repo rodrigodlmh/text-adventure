@@ -5,7 +5,7 @@ public class Torch extends Item{
 	int baseDamageIncrease;
 	
 	Torch() {
-		itemName = "Torch";
+		itemName = "torch";
 		itemDescription = "Lights up an area";
 		used = false;
 		baseDamageIncrease = 5;

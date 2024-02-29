@@ -2,14 +2,19 @@ package game;
 
 public class Player {
 	
-	private int health = 100;
-	private int baseDamage = 10;
+	private int health = 70;
+	private int baseDamage = 0;
 	private Item equippedItem;
 	private boolean hasShield = false;
 	
 	public int GetHealth()
 	{
 		return health;
+	}
+	
+	public void SetDamage(int sword)
+	{
+		baseDamage += sword;
 	}
 	
 	public void SetHealth(int damage)
@@ -28,6 +33,11 @@ public class Player {
 	}
 	
 	private Inventory inventory = new Inventory();
+	
+	public Inventory GetInventory()
+	{
+		return inventory;
+	}
 	
 	//
 	public void GetAllItemsInRoom(Item[] items) {
