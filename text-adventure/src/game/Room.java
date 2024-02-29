@@ -1,7 +1,9 @@
 package game;
 
 import java.beans.JavaBean;
+import java.util.List;
 import java.util.Random;
+import java.util.ArrayList;
 import java.io.Serializable;
 
 @JavaBean
@@ -37,46 +39,67 @@ public class Room implements Serializable {
 	 * If no item spawns, that space is left blank.
 	 * </p>
 	 *
-	 * @param Name the name of the room
+	 * @param name the name of the room
 	 * @param item1 an item passed into the room
 	 * @param item2 an item passed into the room
 	 * @param item3 an item passed into the room
 	 * @param item4 an item passed into the room
 	 **/
-	public Room(String Name, Item item1, Item item2, Item item3, Item item4) {
-
-		this.roomName = Name;
+	public Room(String name, Item item1, Item item2, Item item3, Item item4) {
+		this.roomName = name;
 		this.item1 = item1;
 		this.item2 = item2;
 		this.item3 = item3;
 		this.item4 = item4;
 		
-//		grid[0][0] = item1;
-//		grid[0][1] = item2;
-//		grid[1][0] = item3;
-//		grid[1][1] = item4;
+		// Create a list of coordinates
+		List<Coordinate> allCoordinates = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				allCoordinates.add(new Coordinate(i, j));
+			}
+		}
 
-//		for (int i = 0; i < grid.length; i++) {
-//			for (int j = 0; j < grid[i].length; j++) {
-//					switch (new Random().nextInt(0,4)) {
-//						case 1:
-//							grid[i][j] = item1;
-//							break;
-//						case 2:
-//							grid[i][j] = item2;
-//							break;
-//						case 3:
-//							grid[i][j] = item3;
-//							break;
-//						case 4:
-//							grid[i][j] = item4;
-//							break;
-//						default:
-//							grid[i][j] = null;
-//							break;
-//					}
-//			}
-//		}
+		// Fill the room
+		for (int itemNumber = 1; itemNumber <= 4; itemNumber++) {
+			if (!allCoordinates.isEmpty()) {
+				int randomIndex = new Random().nextInt(allCoordinates.size());
+				Coordinate selectedCoordinate = allCoordinates.remove(randomIndex);
+
+				switch (itemNumber) {
+					case 1:
+						grid[selectedCoordinate.getRow()][selectedCoordinate.getCol()] = item1;
+						break;
+					case 2:
+						grid[selectedCoordinate.getRow()][selectedCoordinate.getCol()] = item2;
+						break;
+					case 3:
+						grid[selectedCoordinate.getRow()][selectedCoordinate.getCol()] = item3;
+						break;
+					case 4:
+						grid[selectedCoordinate.getRow()][selectedCoordinate.getCol()] = item4;
+						break;
+				}
+			}
+		}
+	}
+
+	static class Coordinate {
+		private final int row;
+		private final int col;
+
+		public Coordinate(int row, int col) {
+			this.row = row;
+			this.col = col;
+		}
+
+		public int getRow() {
+			return row;
+		}
+
+		public int getCol() {
+			return col;
+		}
 	}
 
 	/**
