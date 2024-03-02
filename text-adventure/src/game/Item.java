@@ -1,5 +1,8 @@
 package game;
 
+/**
+ * 1.2 -- All other entity classes are based off of this one
+ */
 public abstract class Item {
 	
 	public String itemName;

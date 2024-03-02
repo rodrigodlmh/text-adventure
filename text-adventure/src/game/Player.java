@@ -7,6 +7,7 @@ public class Player {
 	private Item equippedItem;
 	private boolean hasShield = false;
 	
+	// 2nd 2.2 -- Able to access player info in Main class
 	public int GetHealth()
 	{
 		return health;

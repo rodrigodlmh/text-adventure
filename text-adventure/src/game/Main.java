@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Main 
 {
-	// 1.6 -- Unchangeable logging variable
+	// 1.6 + 2.4 -- Unchangeable logging variable (also used in another class)
 	final static Logger log = LogManager.getLogger(Main.class.getName());
 	// Hold parsed command
 	private static String verb;
@@ -135,7 +135,7 @@ public class Main
 			// Run game until it's beaten
 			while(end == false)
 			{
-				// Process every command
+				// 8.1 -- asks for and reads user input from the console
 				System.out.print("Command: ");
 				String command = input.nextLine();
 				// Validates blank input
@@ -155,10 +155,10 @@ public class Main
         }
 		catch (Exception e) 
 		{
-			// Log exceptions
+			// 9.1 -- Log exceptions
             log.debug(e);
         } 
-		// 6.2 partial -- finally clause to close input
+		// 6.2 -- finally clause to close input
 		finally 
 		{
 			// Close user input
@@ -820,6 +820,7 @@ public class Main
 				{
 					if(room[i][j] == 1)
 					{
+						// 2.5 -- Comparison of different instances of the same class
 						// Displays darkness in the second room if they haven't found the torch
 						if(currentRoom == library && torchLit == false)
 						{
@@ -947,6 +948,7 @@ public class Main
 									}
 									else
 									{
+										// Displays the stairs differently if they're not open
 										if(currentRoom.Look(i - 1, j).itemName.equals("troll") && stairOpen == false)
 										{
 											System.out.println("You see gaps in the shape of a square, but you're not strong enough to move an "
