@@ -344,7 +344,7 @@ public class Main
 			{
 				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
 				{
-					if(currentRoom.getGrid()[i][j] != null && room[i][j] == 1)
+					if((currentRoom.getGrid()[i][j] != null && room[i][j] == 1) || item.equals("potion"))
 					{
 						// Ensures the matching item is in the database
 						if(currentRoom.getGrid()[i][j].itemName.equals("chest") && item.equals("key") && 
