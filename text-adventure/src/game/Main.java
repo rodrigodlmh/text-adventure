@@ -322,7 +322,7 @@ public class Main
 							break;
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Nothing to take");
 						
@@ -429,7 +429,7 @@ public class Main
 							break;
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Cannot use");
 						
@@ -483,7 +483,7 @@ public class Main
 							break;
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Nothing to interact with");
 						
@@ -659,7 +659,7 @@ public class Main
 							System.out.println("You need to heal first");
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Cannot fight");
 						
