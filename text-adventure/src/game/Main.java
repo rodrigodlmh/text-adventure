@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Main 
 {
-	// 1.6 -- Unchangeable logging variable
+	// 1.6 + 2.4 -- Unchangeable logging variable (also used in another class)
 	final static Logger log = LogManager.getLogger(Main.class.getName());
 	// Hold parsed command
 	private static String verb;
@@ -135,7 +135,7 @@ public class Main
 			// Run game until it's beaten
 			while(end == false)
 			{
-				// Process every command
+				// 8.1 -- asks for and reads user input from the console
 				System.out.print("Command: ");
 				String command = input.nextLine();
 				// Validates blank input
@@ -155,10 +155,10 @@ public class Main
         }
 		catch (Exception e) 
 		{
-			// Log exceptions
+			// 9.1 -- Log exceptions
             log.debug(e);
         } 
-		// 6.2 partial -- finally clause to close input
+		// 6.2 -- finally clause to close input
 		finally 
 		{
 			// Close user input
@@ -322,7 +322,7 @@ public class Main
 							break;
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Nothing to take");
 						
@@ -361,7 +361,7 @@ public class Main
 							// Delete used item from database
 							playClass.GetInventory().DeleteItem(item);
 							
-							System.out.println("Inside the chest, you find a sword. You can now do battle.");
+							System.out.println("Inside the chest, you find and take a sword. You can now do battle.");
 							
 							currentRoom.getGrid()[i][j] = null;
 							
@@ -414,22 +414,22 @@ public class Main
 						{
 							System.out.println("You try the key on this door, but it doesn't fit");
 						}
-						if(item.equals("potion") && playClass.GetInventory().GetItem("potion") != null)
-						{
-							System.out.println("You heal yourself and can now survive any more battles");
-							
-							playClass.GetInventory().DeleteItem(item);
-							
-							// Instead of making a separate method, heal player by passing in negative number to damaging method
-							playClass.SetHealth(HEALTH_POTION);
-							
-							i = room[0].length;
-							j = room[1].length;
-							
-							break;
-						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(item.equals("potion") && playClass.GetInventory().GetItem("potion") != null)
+					{
+						System.out.println("You heal yourself and can now survive any more battles");
+						
+						playClass.GetInventory().DeleteItem(item);
+						
+						// Instead of making a separate method, heal player by passing in negative number to damaging method
+						playClass.SetHealth(HEALTH_POTION);
+						
+						i = room[0].length;
+						j = room[1].length;
+						
+						break;
+					}
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Cannot use");
 						
@@ -483,7 +483,7 @@ public class Main
 							break;
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Nothing to interact with");
 						
@@ -577,7 +577,7 @@ public class Main
 								}
 								else
 								{
-									System.out.println("You must slay the other monsters in the room before battling the dragon so that "
+									System.out.println("You must slay the 2 other monsters in the room before battling the dragon so that "
 											+ "they aren't a hinderance in your epic battle");
 								}
 							}
@@ -649,7 +649,7 @@ public class Main
 								}
 								else
 								{
-									System.out.println("You must slay the other monsters in the room before battling the dragon so that "
+									System.out.println("You must slay the 2 other monsters in the room before battling the dragon so that "
 											+ "they aren't a hinderance in your epic battle");
 								}
 							}
@@ -659,7 +659,7 @@ public class Main
 							System.out.println("You need to heal first");
 						}
 					}
-					else if(i == room[0].length - 1 && j == room[1].length - 1 && currentRoom.getGrid()[i][j] == null)
+					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
 						System.out.println("Cannot fight");
 						
@@ -820,6 +820,7 @@ public class Main
 				{
 					if(room[i][j] == 1)
 					{
+						// 2.5 -- Comparison of different instances of the same class
 						// Displays darkness in the second room if they haven't found the torch
 						if(currentRoom == library && torchLit == false)
 						{
@@ -947,6 +948,7 @@ public class Main
 									}
 									else
 									{
+										// Displays the stairs differently if they're not open
 										if(currentRoom.Look(i - 1, j).itemName.equals("troll") && stairOpen == false)
 										{
 											System.out.println("You see gaps in the shape of a square, but you're not strong enough to move an "

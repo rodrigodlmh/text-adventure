@@ -1,4 +1,1 @@
-02-25-2024 15:01:17.593 DEBUG [game.Main] - java.sql.SQLException: Method 'executeQuery(String)' not allowed on prepared statement.
-02-25-2024 15:31:34.796 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
-02-25-2024 16:32:13.524 DEBUG [game.Main] - java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3
-02-25-2024 16:37:54.346 DEBUG [game.Main] - java.lang.NullPointerException: Cannot read field "itemName" because the return value of "game.Room.Look(int, int)" is null
+03-02-2024 18:07:36.197 DEBUG [game.Main] - java.lang.NullPointerException: Cannot read field "itemName" because "game.Room.getGrid()[i][j]" is null

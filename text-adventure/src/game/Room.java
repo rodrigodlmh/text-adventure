@@ -23,6 +23,7 @@ public class Room implements Serializable {
 		return roomName;
 	}
 	
+	// 1st 2.2 -- Able to access grid in Main class
 	public Item[][] getGrid()
 	{
 		return grid;
