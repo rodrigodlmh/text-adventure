@@ -29,6 +29,18 @@ public class Player {
 	
 	private Inventory inventory = new Inventory();
 	
+	//
+	public void GetAllItemsInRoom(Item[] items) {
+	}
+	
+	public void GetCurrentRoom(/*Room currentRoom*/){
+	
+	}
+	
+	public void GetAproachedItem(Item item) {
+		
+	}
+	
 	public void DisplayInventory() {
 		inventory.Display();
 	}
