@@ -16,9 +16,13 @@ public class Inventory {
 	// Array list to add items more easily
 	private int itemsInInventory = 0;
 	
-	// Creates the database
+	// 10.1 CRUD Operations
+	/**
+	 * Creates the inventory and initializes the derby database
+	 */
 	Inventory() {
 		String jdbcURL = "jdbc:derby:inventorydb;create=true";
+		// 6.1 and 6.4 Try Catch
 		try (Connection connection = DriverManager.getConnection(jdbcURL)){
 	        DatabaseMetaData meta = connection.getMetaData();
 	        ResultSet resultSet = meta.getTables(null, "APP", "ITEM", null);
@@ -35,14 +39,21 @@ public class Inventory {
 		}
 	}
 	
-	// Add item to the database
+	// 1.3 Overloaded Method
+	// 10.1 CRUD Operations
+	/**
+	 * Add item to the inventory
+	 * @param item to be added to the inventory
+	 */
 	void AddItem(Item item) {
 		if(itemsInInventory > inventoryCapacity) {
 			return;
 		}
 		String jdbcURL = "jdbc:derby:inventorydb";
+		// 6.1 and 6.4 Try Catch
 		try (Connection connection = DriverManager.getConnection(jdbcURL);){
 			String sql = "INSERT INTO Item (name, description) VALUES (? ,?)";
+			// 10.3 Prepared statement
 			PreparedStatement statement = connection.prepareStatement(sql);
 	        statement.setString(1, item.itemName);
 	        statement.setString(2, item.itemDescription);
@@ -54,7 +65,11 @@ public class Inventory {
 		} 
 	}
 	
-	// Add item overload that takes a item name
+	// 1.3 Overloaded Method
+	/**
+	 * Add item to the inventory
+	 * @param the name of the item that should be created and added to the inventory
+	 */
 	void AddItem(String itemName) {
 		Item item = CreateItemWithName(itemName);
 		if(item == null) return;
@@ -62,9 +77,13 @@ public class Inventory {
 		AddItem(item);
 	}
 	
-	// Display items in inventory
+	// 10.1 CRUD Operations
+	/**
+	 * Display the inventory to the console
+	 */
 	void Display() {
 		String jdbcURL = "jdbc:derby:inventorydb";
+		// 6.1 and 6.4 Try Catch
 		try (Connection connection = DriverManager.getConnection(jdbcURL)) {
 			String sql = "SELECT * FROM Item";
 			Statement statement = connection.createStatement();
@@ -79,11 +98,18 @@ public class Inventory {
 		}
 	}
 	
-	// Get item from inventory with a name. Can return null
+	// 10.1 CRUD Operations
+	/**
+	 * Gets item from the inventory
+	 * @param item name that should be returned
+	 * @return item that had the name or null if no item with that name was found
+	 */
 	Item GetItem(String itemName) {
 		String jdbcURL = "jdbc:derby:inventorydb";
+		// 6.1 and 6.4 Try Catch
 		try (Connection connection = DriverManager.getConnection(jdbcURL)) {
 			String sql = "SELECT * FROM Item WHERE name = ?";
+			// 10.3 Prepared statement
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, itemName);
 			ResultSet set = statement.executeQuery(sql);
@@ -101,7 +127,11 @@ public class Inventory {
 		return null;
 	}
 	
-	// Creates an item based on the item name. Can return null
+	/**
+	 * Creates an item 
+	 * @param Name of the item to create
+	 * @return item object
+	 */
 	Item CreateItemWithName(String name) {
 		Item item = null;
 		if(name.equals("Healing Potion")) {
@@ -116,10 +146,14 @@ public class Inventory {
 		
 		return item;
 	}
-
-	// Shutdowns the database
+	
+	// 10.2 Closure of database
+	/**
+	 * Shutdowns the database
+	 */
 	void Shutdown() {
 		String jdbcURL = "jdbc:derby:inventorydb;shutdown=true";
+		// 6.1 and 6.4 Try Catch
 		try (Connection connection = DriverManager.getConnection(jdbcURL)){
 		} catch(SQLException e) {
 			System.out.println("Derby shutdown");
