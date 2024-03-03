@@ -344,7 +344,7 @@ public class Main
 			{
 				for(int j = 0; j < currentRoom.getGrid()[1].length; j++)
 				{
-					if((currentRoom.getGrid()[i][j] != null && room[i][j] == 1) || item.equals("potion"))
+					if(currentRoom.getGrid()[i][j] != null && room[i][j] == 1)
 					{
 						// Ensures the matching item is in the database
 						if(currentRoom.getGrid()[i][j].itemName.equals("chest") && item.equals("key") && 
@@ -361,7 +361,7 @@ public class Main
 							// Delete used item from database
 							playClass.GetInventory().DeleteItem(item);
 							
-							System.out.println("Inside the chest, you find a sword. You can now do battle.");
+							System.out.println("Inside the chest, you find and take a sword. You can now do battle.");
 							
 							currentRoom.getGrid()[i][j] = null;
 							
@@ -414,20 +414,20 @@ public class Main
 						{
 							System.out.println("You try the key on this door, but it doesn't fit");
 						}
-						if(item.equals("potion") && playClass.GetInventory().GetItem("potion") != null)
-						{
-							System.out.println("You heal yourself and can now survive any more battles");
-							
-							playClass.GetInventory().DeleteItem(item);
-							
-							// Instead of making a separate method, heal player by passing in negative number to damaging method
-							playClass.SetHealth(HEALTH_POTION);
-							
-							i = room[0].length;
-							j = room[1].length;
-							
-							break;
-						}
+					}
+					else if(item.equals("potion") && playClass.GetInventory().GetItem("potion") != null)
+					{
+						System.out.println("You heal yourself and can now survive any more battles");
+						
+						playClass.GetInventory().DeleteItem(item);
+						
+						// Instead of making a separate method, heal player by passing in negative number to damaging method
+						playClass.SetHealth(HEALTH_POTION);
+						
+						i = room[0].length;
+						j = room[1].length;
+						
+						break;
 					}
 					else if(i == room[0].length - 1 && j == room[1].length - 1 && (currentRoom.getGrid()[i][j] == null || room[i][j] == 0))
 					{
@@ -577,7 +577,7 @@ public class Main
 								}
 								else
 								{
-									System.out.println("You must slay the other monsters in the room before battling the dragon so that "
+									System.out.println("You must slay the 2 other monsters in the room before battling the dragon so that "
 											+ "they aren't a hinderance in your epic battle");
 								}
 							}
@@ -649,7 +649,7 @@ public class Main
 								}
 								else
 								{
-									System.out.println("You must slay the other monsters in the room before battling the dragon so that "
+									System.out.println("You must slay the 2 other monsters in the room before battling the dragon so that "
 											+ "they aren't a hinderance in your epic battle");
 								}
 							}
