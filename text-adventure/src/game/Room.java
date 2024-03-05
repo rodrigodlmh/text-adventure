@@ -63,6 +63,7 @@ public class Room implements Serializable {
 			}
 		}
 
+		// 5. For each loop
 		// Fill the room
 		IntStream.rangeClosed(1, 4).forEach(n -> {
 			if (!allCoordinates.isEmpty()) {
