@@ -3,6 +3,7 @@ package game;
 import java.beans.JavaBean;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 import java.util.ArrayList;
 import java.io.Serializable;
 
@@ -52,7 +53,8 @@ public class Room implements Serializable {
 		this.item2 = item2;
 		this.item3 = item3;
 		this.item4 = item4;
-		
+
+		// 2. Use of an array list 
 		// Create a list of coordinates
 		List<Coordinate> allCoordinates = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
@@ -61,13 +63,14 @@ public class Room implements Serializable {
 			}
 		}
 
+		// 5. For each loop
 		// Fill the room
-		for (int itemNumber = 1; itemNumber <= 4; itemNumber++) {
+		IntStream.rangeClosed(1, 4).forEach(n -> {
 			if (!allCoordinates.isEmpty()) {
 				int randomIndex = new Random().nextInt(allCoordinates.size());
 				Coordinate selectedCoordinate = allCoordinates.remove(randomIndex);
-
-				switch (itemNumber) {
+	
+				switch (n) {
 					case 1:
 						grid[selectedCoordinate.getRow()][selectedCoordinate.getCol()] = item1;
 						break;
@@ -82,9 +85,14 @@ public class Room implements Serializable {
 						break;
 				}
 			}
-		}
+		});
 	}
 
+	// 5. & 7. Use of static and nested class
+	/**
+	 * @param row the row number
+	 * @param col the column number
+	 */
 	static class Coordinate {
 		private final int row;
 		private final int col;
@@ -120,6 +128,7 @@ public class Room implements Serializable {
 		return grid[xcord][ycord];
 	}
 
+	//4.& 9. Override the toString method
 	@Override
 	public String toString() {
 		return "-------\n" + "|" + grid[0][0] + "|" + grid[1][0] + "|" + grid[2][0] + "|" + "\n-------\n"+"|" + grid[0][1] + "|" + grid[1][1] + "|" + grid[2][1] + "|"+"\n-------\n"+"|" + grid[0][2] + "|" + grid[1][2] + "|" + grid[2][2] + "|"+"\n-------";

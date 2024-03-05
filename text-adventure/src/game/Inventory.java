@@ -21,7 +21,9 @@ public class Inventory {
 	//private String jdbcURL = "jdbc:derby:inventorydb;create=true";
 	private EmbeddedDataSource ds = new EmbeddedDataSource();
 	
-	// Creates the database
+	/**
+	 * Creates the inventory and initializes the derby database
+	 */
 	Inventory() 
 	{
 		ds.setDatabaseName("inventorydb");
@@ -48,7 +50,10 @@ public class Inventory {
 		}
 	}
 	
-	// Add item to the database
+	/**
+	 * Add item to the inventory
+	 * @param item to be added to the inventory
+	 */
 	void AddItem(Item item) 
 	{
 		if(itemsInInventory > inventoryCapacity) 
@@ -72,7 +77,10 @@ public class Inventory {
 		} 
 	}
 	
-	// Add item overload that takes a item name
+	/**
+	 * Add item to the inventory
+	 * @param the name of the item that should be created and added to the inventory
+	 */
 	void AddItem(String itemName) 
 	{
 		Item item = CreateItemWithName(itemName);
@@ -81,7 +89,9 @@ public class Inventory {
 		AddItem(item);
 	}
 	
-	// Display items in inventory
+	/**
+	 * Display the inventory to the console
+	 */
 	void Display() 
 	{
 		try (Connection connection = ds.getConnection()) 
@@ -102,7 +112,10 @@ public class Inventory {
 		}
 	}
 	
-	// Delete item from inventory
+	/**
+	 * Deletes and item from the database
+	 * @param item name that should be deleted
+	 */
 	void DeleteItem(String itemName)
 	{
 		try (Connection connection = ds.getConnection()) 
@@ -123,7 +136,11 @@ public class Inventory {
 		}
 	}
 	
-	// Get item from inventory with a name. Can return null
+	/**
+	 * Gets item from the inventory
+	 * @param item name that should be returned
+	 * @return item that had the name or null if no item with that name was found
+	 */
 	String GetItem(String itemName) 
 	{
 		try (Connection connection = ds.getConnection()) 
@@ -150,7 +167,11 @@ public class Inventory {
 		return null;
 	}
 	
-	// Creates an item based on the item name. Can return null
+	/**
+	 * Creates an item 
+	 * @param Name of the item to create
+	 * @return item object
+	 */
 	Item CreateItemWithName(String name) 
 	{
 		Item item = null;
@@ -170,7 +191,9 @@ public class Inventory {
 		return item;
 	}
 
-	// Shutdowns the database
+	/**
+	 * Shutdowns the database
+	 */
 //	void Shutdown() 
 //	{
 //		String jdbcURL = "jdbc:derby:inventorydb;shutdown=true";
