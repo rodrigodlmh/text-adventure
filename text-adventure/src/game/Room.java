@@ -12,8 +12,7 @@ public class Room implements Serializable {
 
 	private String roomName;
 
-	// 6. Use of the final keyword
-	private final Item[][]grid = new Item[3][3];
+	private Item[][] grid = new Item[3][3];
 
 	private Item item1;
 	private Item item2;
@@ -25,11 +24,12 @@ public class Room implements Serializable {
 		return roomName;
 	}
 	
+	// 1st 2.2 -- Able to access grid in Main class
 	public Item[][] getGrid()
 	{
 		return grid;
 	}
-
+	
 	public Room()
 	{
 		

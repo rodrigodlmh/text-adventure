@@ -3,7 +3,7 @@ package game;
 public class Key extends Item{
 	
 	Key() {
-		itemName = "Key";
+		itemName = "key";
 		itemDescription = "A key that can be used to open doors or chests";
 		used = false;
 	}

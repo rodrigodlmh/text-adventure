@@ -5,7 +5,7 @@ public class Sword extends Item{
 	int baseDamageIncrease;
 	
 	Sword() {
-		itemName = "Sword";
+		itemName = "sword";
 		itemDescription = "A weapon that will increase your damage";
 		used = false;
 		baseDamageIncrease = 10;
